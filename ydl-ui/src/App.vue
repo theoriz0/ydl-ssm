@@ -1,35 +1,16 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <el-button type="primary">Primary</el-button>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <router-view/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import { listUser } from '@/api/user.js'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  },
-  mounted(){
-    listUser().then(res => {
-      console.log(res)
-    }).catch(err => {
-              console.log("error"+err)
-    })
+  name: 'HelloWorld',
+  mounted() {
+    this.$router.push({name: 'login'})
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
