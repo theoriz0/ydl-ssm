@@ -73,16 +73,16 @@
 
     <!--数据源-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
-        <property name="url" value="${url}"/>
-        <property name="driverClassName" value="${driverName}"/>
-        <property name="username" value="${user}"/>
-        <property name="password" value="${password}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="driverClassName" value="${jdbc.driverName}"/>
+        <property name="username" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
     </bean>
 
     <!-- 整个整合就是在围绕sqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-<!--        <property name="mapperLocations" value="classpath:mapper/**/*.xml"/>-->
+        <property name="mapperLocations" value="classpath:mapper/**/*.xml"/>
         <property name="configuration">
             <bean class="org.apache.ibatis.session.Configuration">
                 <property name="mapUnderscoreToCamelCase" value="true"/>
