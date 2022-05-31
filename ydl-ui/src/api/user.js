@@ -1,17 +1,25 @@
 import request from "@/api"
 
-export function listUser(query) {
+export function login(data) {
     return request({
-        url: '/user',
-        method: 'get',
-        params: query
+        url: '/login',
+        method: 'post',
+        data: data
     })
 }
 
-export function addUser(data) {
-    return request({
-        url: '/user',
-        method: 'post',
-        params: data
-    })
-}
+// export function listUser(query) {
+//     return request({
+//         url: '/user',
+//         method: 'get',
+//         params: query
+//     })
+// }
+//
+// export function addUser(data) {
+//     return request({
+//         url: '/user',
+//         method: 'post',
+//         params: data
+//     })
+// }

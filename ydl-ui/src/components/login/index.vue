@@ -17,7 +17,7 @@
         >
           <el-form-item label="用户名" prop="username">
             <el-input
-              v-model="user.username"
+              v-model="user.userName"
               placeholder="请输入用户"
             ></el-input>
           </el-form-item>
@@ -30,7 +30,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="login">登陆</el-button>
+            <el-button type="primary" @click="doLogin">登陆</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -45,14 +45,15 @@ export default {
     return {
       // 用户信息
       user: {
-        username: "admin",
+        userName: "admin",
         password: "123456",
       },
     };
   },
   methods: {
-    login() {
-      this.$router.push({name: 'main'})
+    doLogin() {
+      this.$store.dispatch("LOGIN", this.user)
+      // this.$router.push({name: 'main'})
     }
   }
 };
