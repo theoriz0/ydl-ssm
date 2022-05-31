@@ -25,6 +25,7 @@ const user = {
                 commit("SAVE_USERNAME", res.data.ydlUser.userName)
                 commit("SAVE_TOKEN", res.data.token)
                 commit("SAVE_NICKNAME", res.data.ydlUser.nickName)
+                storage.saveSessionObject("loginUser", res.data)
             })
         }
     }
