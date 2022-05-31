@@ -71,6 +71,9 @@ public class RedisTemplate {
         T returnValue = null;
         try {
             String valueString = resource.get(key);
+            if (valueString == null) {
+                return null;
+            }
             returnValue = objectMapper.readValue(valueString, typeReference);
         } catch (JedisException | JsonProcessingException e) {
             log.error("redis execution error!", e);
