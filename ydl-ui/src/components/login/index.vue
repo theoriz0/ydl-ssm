@@ -15,7 +15,7 @@
           :model="user"
           label-width="80px"
         >
-          <el-form-item label="用户名" prop="username">
+          <el-form-item label="用户名" prop="userName">
             <el-input
               v-model="user.userName"
               placeholder="请输入用户"
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { ElMessage } from 'element-plus'
 export default {
   name: "login",
   data() {
@@ -48,11 +49,40 @@ export default {
         userName: "admin",
         password: "123456",
       },
+      loginRules: {
+        userName: [
+          {
+            required: true,
+            message: "请输入用户名",
+            trigger: "blur"
+          },
+          {
+            min: 5,
+            max: 15,
+            message: "用户名长度5-15位",
+            trigger: "blur"
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: "请输入密码",
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
   methods: {
     doLogin() {
-      this.$store.dispatch("LOGIN", this.user)
+      this.$refs.user.validate((valid) => {
+        if (valid) {
+          this.$store.dispatch("LOGIN", this.user)
+        } else {
+          ElMessage.error('数据不合法')
+        }
+      })
+
       // this.$router.push({name: 'main'})
     }
   }
