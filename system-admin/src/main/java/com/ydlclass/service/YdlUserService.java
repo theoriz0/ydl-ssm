@@ -1,5 +1,7 @@
 package com.ydlclass.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ydlclass.entity.YdlLoginUser;
 import com.ydlclass.entity.YdlUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -53,4 +55,11 @@ public interface YdlUserService {
      */
     boolean deleteById(Long userId);
 
+    /**
+     * 使用用户名和密码登陆
+     * @param userName 用户名
+     * @param password 密码
+     * @return 登陆信息类
+     */
+    YdlLoginUser login(String userName, String password) throws JsonProcessingException;
 }

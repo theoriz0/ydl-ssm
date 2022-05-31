@@ -1,5 +1,9 @@
 package com.ydlclass.entity;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -18,6 +22,8 @@ public class YdlUser implements Serializable {
     /**
      * 用户账号
      */
+    @NotNull
+    @Size(min = 5, max = 15, message = "用户名长度应该在5-15之间")
     private String userName;
     /**
      * 用户昵称
@@ -26,10 +32,12 @@ public class YdlUser implements Serializable {
     /**
      * 用户邮箱
      */
+    @Email(message = "邮箱格式校验失败")
     private String email;
     /**
      * 手机号码
      */
+    @Pattern(regexp = "^1[3456789]\\d{9}$", message = "手机号格式校验失败")
     private String phonenumber;
     /**
      * 用户性别（0男 1女 2未知）
@@ -42,6 +50,8 @@ public class YdlUser implements Serializable {
     /**
      * 密码
      */
+    @NotNull
+    @Size(min = 6, max = 20, message = "密码应在6-20位之间")
     private String password;
     /**
      * 帐号状态（0正常 1停用）

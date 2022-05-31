@@ -29,6 +29,14 @@
         where user_id = #{userId}
     </select>
 
+    <!--用户名查询单个-->
+    <select id="queryByUserName" resultMap="YdlUserMap">
+        select
+            user_id, user_name, nick_name, email, phonenumber, sex, avatar, password, status, del_flag, login_ip, login_date, create_by, create_time, update_by, update_time
+        from ydl_user
+        where user_name = #{userName}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="YdlUserMap">
         select
