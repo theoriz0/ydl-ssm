@@ -77,7 +77,13 @@ export default {
     doLogin() {
       this.$refs.user.validate((valid) => {
         if (valid) {
-          this.$store.dispatch("LOGIN", this.user)
+          this.$store.dispatch("LOGIN", this.user).then((res) => {
+            if (res.status === 200) {
+              this.$router.push({name: 'main'})
+            }
+          }).catch((err) => {
+            Element.error(err.message)
+          })
         } else {
           ElMessage.error('数据不合法')
         }
