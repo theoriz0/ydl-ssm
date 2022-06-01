@@ -62,4 +62,6 @@ public interface YdlUserService {
      * @return 登陆信息类
      */
     YdlLoginUser login(String userName, String password) throws JsonProcessingException;
+
+    void logout();
 }

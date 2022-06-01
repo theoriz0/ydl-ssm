@@ -110,6 +110,13 @@ public class YdlUserServiceImpl implements YdlUserService {
     }
 
     @Override
+    public void logout() {
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        String token = request.getHeader(Constants.HEADER_AUTH);
+        redisTemplate.remove(Constants.TOKEN_PREFIX + token);
+    }
+
+    @Override
     public YdlLoginUser login(String userName, String password) throws JsonProcessingException {
         //1. 登陆，使用用户名查询用户
         YdlUser user = ydlUserDao.queryByUserName(userName);

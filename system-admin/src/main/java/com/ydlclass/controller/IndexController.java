@@ -39,4 +39,15 @@ public class IndexController {
         }
         return ResponseEntity.ok().body(ydlLoginUser);
     }
+
+    @PostMapping("logout")
+    public ResponseEntity logout() {
+        try {
+            userService.logout();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+        return ResponseEntity.ok().body("退出登陆");
+    }
 }

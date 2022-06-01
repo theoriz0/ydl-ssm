@@ -83,4 +83,18 @@ public class RedisTemplate {
         }
         return returnValue;
     }
+
+    public long remove(String ...key) {
+        Jedis resource = jedisPool.getResource();
+        long del = 0L;
+        try {
+            del = resource.del(key);
+        } catch (JedisException e) {
+            log.error("redis execution error! {}", e);
+            jedisPool.returnBrokenResource(resource);
+        } finally {
+            jedisPool.returnResource(resource);
+        }
+        return del;
+    }
 }
