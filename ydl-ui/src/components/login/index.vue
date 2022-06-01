@@ -46,8 +46,8 @@ export default {
     return {
       // 用户信息
       user: {
-        userName: "admin",
-        password: "123456",
+        userName: "ydl_admin",
+        password: "xxxxxx",
       },
       loginRules: {
         userName: [
@@ -88,8 +88,6 @@ export default {
           ElMessage.error('数据不合法')
         }
       })
-
-      // this.$router.push({name: 'main'})
     }
   }
 };
