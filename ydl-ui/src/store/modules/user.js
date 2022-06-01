@@ -20,13 +20,16 @@ const user = {
         },
     },
     actions: {
-        LOGIN({commit}, user){
-            login(user).then(res => {
-                //需要将获取的数据保存起来
-                commit("SAVE_USERNAME", res.data.ydlUser.userName)
-                commit("SAVE_TOKEN", res.data.token)
-                commit("SAVE_NICKNAME", res.data.ydlUser.nickName)
-                storage.saveSessionObject("loginUser", res.data)
+        LOGIN({commit}, user) {
+            return new Promise(function (resolve, reject) {
+                login(user).then(res => {
+                    //需要将获取的数据保存起来
+                    commit("SAVE_USERNAME", res.data.ydlUser.userName)
+                    commit("SAVE_TOKEN", res.data.token)
+                    commit("SAVE_NICKNAME", res.data.ydlUser.nickName)
+                    storage.saveSessionObject("loginUser", res.data)
+                    resolve(res)
+                })
             })
         }
     }
