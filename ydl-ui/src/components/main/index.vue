@@ -43,7 +43,11 @@
         </el-row>
       </el-aside>
       <el-container>
-        <el-header v-html="'<button onclick=\'alert(1)\'>我是攻击者的按钮</button>'"></el-header>
+        <el-header>
+<!--        <el-header v-html="'<button onclick=\'alert(1)\'>我是攻击者的按钮</button>'">-->
+          昵称
+          <el-button @click="doLogout" primary>Logout</el-button>
+        </el-header>
         <!--进行路由跳转-->
         <el-main>
           <router-view />
@@ -52,6 +56,17 @@
   </el-container>
 </template>
 <script setup>
+import {useStore} from 'vuex'
+import {useRouter} from 'vue-router'
+//组合式API
+let store = useStore()
+const router = useRouter()
+let doLogout = function () {
+  store.dispatch("LOGOUT").then((res) => {
+    console.log(res)
+    router.push({name: 'login'})
+  })
+}
 </script>
 
 <style scoped>
