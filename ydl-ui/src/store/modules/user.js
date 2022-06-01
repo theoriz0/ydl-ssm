@@ -1,5 +1,6 @@
 import {login} from '@/api/user'
 import storage from '@/util/storage'
+
 const user = {
     state: {
         username: '',
@@ -8,13 +9,13 @@ const user = {
     },
     getters: {},
     mutations: {
-        SAVE_USERNAME(state, username){
+        SAVE_USERNAME(state, username) {
             state.username = username
         },
-        SAVE_TOKEN(state, token){
+        SAVE_TOKEN(state, token) {
             state.token = token
         },
-        SAVE_NICKNAME(state, nickname){
+        SAVE_NICKNAME(state, nickname) {
             state.nickname = nickname
         },
     },
