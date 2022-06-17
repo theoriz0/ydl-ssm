@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2022-05-30 00:12:56
  */
-public class YdlRole implements Serializable {
+public class YdlRole extends YdlBaseEntity implements Serializable {
     private static final long serialVersionUID = -83875355642352072L;
     /**
      * 角色ID

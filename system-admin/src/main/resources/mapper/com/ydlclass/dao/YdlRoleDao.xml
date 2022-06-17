@@ -29,35 +29,35 @@
           role_id, role_name, role_tag, role_sort, status, del_flag, create_by, create_time, update_by, update_time
         from ydl_role
         <where>
-            <if test="roleId != null">
-                and role_id = #{roleId}
+            <if test="ydlRole.roleId != null">
+                and role_id = #{ydlRole.roleId}
             </if>
-            <if test="roleName != null and roleName != ''">
-                and role_name = #{roleName}
+            <if test="ydlRole.roleName != null and ydlRole.roleName != ''">
+                and role_name = #{ydlRole.roleName}
             </if>
-            <if test="roleTag != null and roleTag != ''">
-                and role_tag = #{roleTag}
+            <if test="ydlRole.roleTag != null and ydlRole.roleTag != ''">
+                and role_tag = #{ydlRole.roleTag}
             </if>
-            <if test="roleSort != null">
-                and role_sort = #{roleSort}
+            <if test="ydlRole.roleSort != null">
+                and role_sort = #{ydlRole.roleSort}
             </if>
-            <if test="status != null and status != ''">
-                and status = #{status}
+            <if test="ydlRole.status != null and ydlRole.status != ''">
+                and status = #{ydlRole.status}
             </if>
-            <if test="delFlag != null and delFlag != ''">
-                and del_flag = #{delFlag}
+            <if test="ydlRole.delFlag != null and ydlRole.delFlag != ''">
+                and del_flag = #{ydlRole.delFlag}
             </if>
-            <if test="createBy != null and createBy != ''">
-                and create_by = #{createBy}
+            <if test="ydlRole.createBy != null and ydlRole.createBy != ''">
+                and create_by = #{ydlRole.createBy}
             </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
+            <if test="ydlRole.createTime != null">
+                and create_time = #{ydlRole.createTime}
             </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
+            <if test="ydlRole.updateBy != null and ydlRole.updateBy != ''">
+                and update_by = #{ydlRole.updateBy}
             </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
+            <if test="ydlRole.updateTime != null">
+                and update_time = #{ydlRole.updateTime}
             </if>
         </where>
         limit #{pageable.offset}, #{pageable.pageSize}

@@ -28,12 +28,11 @@ public class YdlRoleController {
      * 分页查询
      *
      * @param ydlRole 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<YdlRole>> queryByPage(YdlRole ydlRole, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.ydlRoleService.queryByPage(ydlRole, pageRequest));
+    public ResponseEntity<Page<YdlRole>> queryByPage(YdlRole ydlRole) {
+        return ResponseEntity.ok(this.ydlRoleService.queryByPage(ydlRole, PageRequest.of(ydlRole.getPage(), ydlRole.getSize())));
     }
 
     /**
