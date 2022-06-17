@@ -15,13 +15,13 @@ export function logout() {
     })
 }
 
-// export function listUser(query) {
-//     return request({
-//         url: '/user',
-//         method: 'get',
-//         params: query
-//     })
-// }
+export function listUser(query) {
+    return request({
+        url: '/ydlUser',
+        method: 'get',
+        params: query
+    })
+}
 //
 // export function addUser(data) {
 //     return request({
