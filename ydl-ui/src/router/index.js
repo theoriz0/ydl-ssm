@@ -1,8 +1,10 @@
 // 导入用来创建路由和确定路由模式的两个方法
+import store from '@/store';
 import {
     createRouter,
     createWebHistory
 } from 'vue-router';
+import storage from '@/util/storage';
 
 /**
  * 定义路由信息
@@ -29,7 +31,21 @@ const router = createRouter({
 
 // 全局的路由守卫
 router.beforeEach((to, from) => {
-    //每次进行路由切换都判断一下有没有登陆，如果没有登陆，跳转到登陆页
+    //1. 如果去的是登陆，放行
+    if (to.name === 'login') {
+        return true
+    }
+    //2. 否则检查是否登陆，如果已经登陆，则放行
+    if (store.getters.isLogin) {
+        return true
+    }
+    //3. 没有登陆就跳转到登陆
+    if (!storage.getSessionObject("loginUser")) {
+        router.push({name: 'login'})
+    }
+    //4. 登陆则读取storage到vuex
+    store.dispatch("RECOVERY_USER")
+    
     return true;
 })
 
