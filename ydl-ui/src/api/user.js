@@ -22,6 +22,13 @@ export function listUser(query) {
         params: query
     })
 }
+
+export function getInfo() {
+    return request({
+        url: '/ydlUser/getInfo',
+        method: 'get'
+    })
+}
 //
 // export function addUser(data) {
 //     return request({

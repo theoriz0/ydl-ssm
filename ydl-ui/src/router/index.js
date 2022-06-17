@@ -42,7 +42,7 @@ const router = createRouter({
 
 
 // 全局的路由守卫
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
     //1. 如果去的是登陆，放行
     if (to.name === 'login') {
         return true
@@ -57,6 +57,7 @@ router.beforeEach((to, from) => {
     }
     //4. 登陆则读取storage到vuex
     store.dispatch("RECOVERY_USER")
+    store.dispatch("GET_INFO")
 
     return true;
 })

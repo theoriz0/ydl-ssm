@@ -6,6 +6,8 @@ import com.ydlclass.configuration.CustomObjectMapper;
 import com.ydlclass.configuration.RedisTemplate;
 import com.ydlclass.constant.Constants;
 import com.ydlclass.entity.YdlLoginUser;
+import com.ydlclass.entity.YdlMenu;
+import com.ydlclass.entity.YdlRole;
 import com.ydlclass.entity.YdlUser;
 import com.ydlclass.dao.YdlUserDao;
 import com.ydlclass.exception.PasswordIncorrectException;
@@ -24,10 +26,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 用户信息表(YdlUser)表服务实现类
@@ -107,6 +107,59 @@ public class YdlUserServiceImpl implements YdlUserService {
     @Override
     public boolean deleteById(Long userId) {
         return this.ydlUserDao.deleteById(userId) > 0;
+    }
+
+    @Override
+    public HashMap<String, List<String>> getInfo() {
+        // 1、获取当前登陆的对象
+        YdlLoginUser loginUser = getLoginUser();
+
+        // 2、查询当前用户的角色和权限
+        YdlUser info = ydlUserDao.getInfo(loginUser.getUserId());
+
+        // 3、处理权限和角色的相关信息
+        // (1) roles:token : [admin,xxx,yyy]   perms:token: [system:user:add,system:user:update]
+        List<String> roleTags = info.getYdlRoles().stream().map(YdlRole::getRoleTag).collect(Collectors.toList());
+        redisTemplate.setObject(Constants.ROLE_PREFIX + loginUser.getToken(),roleTags,Constants.TOKEN_EXPIRE_SECONDS);
+
+        List<String> prems = new ArrayList<>();
+        // [{roleName:cc,roleTag:xxx,perms:[{id,'xxx',perm:'system'},{id,'xxx',perm:'system'}]},{}]
+        // [[{id,'xxx',perm:'system'},{id,'xxx',perm:'system'}],[{id,'xxx',perm:'system'},{id,'xxx',perm:'system'}]]
+        // ['system','system:user:add']
+        info.getYdlRoles()
+                .stream()
+                .map(YdlRole::getYdlMenus)
+                .forEach(menus -> {
+                    prems.addAll(menus.stream()
+                            .map(YdlMenu::getPerms)
+                            .collect(Collectors.toList()));
+                });
+        redisTemplate.setObject(Constants.PERM_PREFIX + loginUser.getToken(),prems,Constants.TOKEN_EXPIRE_SECONDS);
+
+        // 整合数据
+        HashMap<String,List<String>> data = new HashMap<>();
+        data.put("roles",roleTags);
+        data.put("perms",prems);
+
+        return data;
+    }
+
+    // 获取当前登陆用户的方法
+    private YdlLoginUser getLoginUser(){
+
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        // 获取首部信息的token
+        String token = request.getHeader(Constants.HEADER_AUTH);
+
+        if (token == null) {
+            throw new RuntimeException("当前用户未登录！");
+        }
+        YdlLoginUser ydlLoginUser = redisTemplate.getObject(Constants.TOKEN_PREFIX + token, new TypeReference<YdlLoginUser>() {});
+        if (ydlLoginUser== null){
+            throw new RuntimeException("当前用户未登录！");
+        }
+        // 3、使用token去redis中查看，有没有对应的loginUser
+        return ydlLoginUser;
     }
 
     @Override

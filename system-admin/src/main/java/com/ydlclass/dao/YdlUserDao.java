@@ -85,5 +85,7 @@ public interface YdlUserDao {
      * @return 用户对象
      */
     YdlUser queryByUserName(String userName);
+
+    YdlUser getInfo(Long userId);
 }
 

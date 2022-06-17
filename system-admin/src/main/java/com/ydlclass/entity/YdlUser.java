@@ -6,6 +6,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 用户信息表(YdlUser)实体类
@@ -86,6 +87,10 @@ public class YdlUser extends YdlBaseEntity implements Serializable {
      */
     private Date updateTime;
 
+    /**
+     * 用户拥有的角色
+     */
+    private List<YdlRole> ydlRoles;
 
     public Long getUserId() {
         return userId;
@@ -215,5 +220,12 @@ public class YdlUser extends YdlBaseEntity implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public List<YdlRole> getYdlRoles() {
+        return ydlRoles;
+    }
+
+    public void setYdlRoles(List<YdlRole> ydlRoles) {
+        this.ydlRoles = ydlRoles;
+    }
 }
 

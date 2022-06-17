@@ -2,6 +2,7 @@ package com.ydlclass.entity;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 角色信息表(YdlRole)实体类
@@ -51,6 +52,16 @@ public class YdlRole extends YdlBaseEntity implements Serializable {
      * 更新时间
      */
     private Date updateTime;
+
+    public List<YdlMenu> getYdlMenus() {
+        return ydlMenus;
+    }
+
+    public void setYdlMenus(List<YdlMenu> ydlMenus) {
+        this.ydlMenus = ydlMenus;
+    }
+
+    private List<YdlMenu> ydlMenus;
 
 
     public Long getRoleId() {

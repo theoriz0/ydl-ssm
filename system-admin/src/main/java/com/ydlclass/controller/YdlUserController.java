@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 用户信息表(YdlUser)表控制层
@@ -33,6 +35,11 @@ public class YdlUserController {
     @GetMapping
     public ResponseEntity<Page<YdlUser>> queryByPage(YdlUser ydlUser) {
         return ResponseEntity.ok(this.ydlUserService.queryByPage(ydlUser, PageRequest.of(ydlUser.getPage(), ydlUser.getSize())));
+    }
+
+    @GetMapping("getInfo")
+    public ResponseEntity<HashMap<String, List<String>>> getInfo() {
+        return ResponseEntity.ok(this.ydlUserService.getInfo());
     }
 
     /**

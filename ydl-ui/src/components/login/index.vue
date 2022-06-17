@@ -79,7 +79,9 @@ export default {
         if (valid) {
           this.$store.dispatch("LOGIN", this.user).then((res) => {
             if (res.status === 200) {
-              this.$router.push({name: 'main'})
+               this.$store.dispatch("GET_INFO").then(()=>{
+                 this.$router.push({name: 'main'})
+              })
             }
           }).catch((err) => {
             Element.error(err.message)

@@ -1,75 +1,66 @@
 <template>
   <el-container>
 
-      <el-aside width="200px">
-        <el-row>
-          <el-col :span="24">
-            <el-image
-              style="
+    <el-aside width="200px">
+      <el-row>
+        <el-col :span="24">
+          <el-image style="
                 width: 120px;
                 height: 60px;
                 display: block;
                 margin: 40px auto;
-              "
-              fit="fill"
-              :src="require('@/assets/image/main_logo.png')"
-            ></el-image>
-            <el-menu
-              active-text-color="#ffd04b"
-              background-color="#191A22"
-              class="el-menu-vertical-demo"
-              default-active="2"
-              text-color="#fff"
-            >
-              <el-sub-menu index="1">
-                <template #title>
-                  <el-icon></el-icon>
-                  <span>系统管理</span>
-                </template>
-
-                <el-menu-item index="1-1" @click="open('user')">
-                  用户管理</el-menu-item
-                >
-                <el-menu-item index="1-2" @click="open('role')">
-                  角色管理</el-menu-item
-                >
-              </el-sub-menu>
-              <el-menu-item index="2">
+              " fit="fill" :src="require('@/assets/image/main_logo.png')"></el-image>
+          <el-menu active-text-color="#ffd04b" background-color="#191A22" class="el-menu-vertical-demo"
+            default-active="2" text-color="#fff">
+            <el-sub-menu index="1">
+              <template #title>
                 <el-icon></el-icon>
-                <span>客户管理</span>
-              </el-menu-item>
-            </el-menu>
-          </el-col>
-        </el-row>
-      </el-aside>
-      <el-container>
-        <el-header>
-<!--        <el-header v-html="'<button onclick=\'alert(1)\'>我是攻击者的按钮</button>'">-->
-          昵称: {{ $store.state.user.nickname}}
-          <el-button @click="doLogout" primary>Logout</el-button>
-        </el-header>
-        <!--进行路由跳转-->
-        <el-main>
-          <router-view />
-        </el-main>
-      </el-container>
+                <span>系统管理</span>
+              </template>
+
+              <el-menu-item index="1-1" @click="open('user')" v-hasPermission="['system:user']">
+                用户管理</el-menu-item>
+              <el-menu-item index="1-2" @click="open('role')">
+                角色管理</el-menu-item>
+            </el-sub-menu>
+            <el-menu-item index="2" v-hasPermission="['system:client']">
+              <el-icon></el-icon>
+              <span>客户管理</span>
+            </el-menu-item>
+          </el-menu>
+        </el-col>
+      </el-row>
+    </el-aside>
+    <el-container>
+      <el-header>
+        <!--        <el-header v-html="'<button onclick=\'alert(1)\'>我是攻击者的按钮</button>'">-->
+        昵称: {{ $store.state.user.nickname }}
+        <el-button @click="doLogout" primary>Logout</el-button>
+        <el-button type="primary" v-hasRole="['admin']" @click="create"></el-button>
+
+      </el-header>
+      <!--进行路由跳转-->
+      <el-main>
+        <router-view />
+      </el-main>
+    </el-container>
   </el-container>
 </template>
 <script setup>
-import {useStore} from 'vuex'
-import {useRouter} from 'vue-router'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 //组合式API
 let store = useStore()
 const router = useRouter()
 let doLogout = function () {
   store.dispatch("LOGOUT").then((res) => {
     console.log(res)
-    router.push({name: 'login'})
+    router.push({ name: 'login' })
   })
 }
 
-let open = function(name){
-  router.push({name})
+let open = function (name) {
+  router.push({ name })
 }
 </script>
 

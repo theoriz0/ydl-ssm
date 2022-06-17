@@ -6,6 +6,9 @@ import com.ydlclass.entity.YdlUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * 用户信息表(YdlUser)表服务接口
  *
@@ -64,4 +67,6 @@ public interface YdlUserService {
     YdlLoginUser login(String userName, String password) throws JsonProcessingException;
 
     void logout();
+
+    public HashMap<String, List<String>> getInfo();
 }
