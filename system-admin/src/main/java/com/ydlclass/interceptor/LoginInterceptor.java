@@ -37,14 +37,17 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.getWriter().write(objectMapper.writeValueAsString(res));
             return false;
         }
-        YdlLoginUser loginUser = redisTemplate.getObject(Constants.TOKEN_PREFIX + token, new TypeReference<YdlLoginUser>() {});
+        //3. 使用token去redis，看有没有对应的loginUser
+        String key = Constants.TOKEN_PREFIX + token;
+        YdlLoginUser loginUser = redisTemplate.getObject(key, new TypeReference<YdlLoginUser>() {});
         if (loginUser == null) {
             ResponseEntity<String> res = ResponseEntity.status(401).body("Bad Credentials");
             response.setStatus(401);
             response.getWriter().write(objectMapper.writeValueAsString(res));
             return false;
         }
-        //3. 使用token去redis，看有没有对应的loginUser
+        //延长token有效期
+        redisTemplate.expire(key, Constants.TOKEN_EXPIRE_SECONDS);
         return true;
     }
 }

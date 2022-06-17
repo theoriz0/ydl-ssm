@@ -97,4 +97,18 @@ public class RedisTemplate {
         }
         return del;
     }
+
+    public long expire(String key, long seconds) {
+        Jedis resource = jedisPool.getResource();
+        long result = 0L;
+        try {
+            result = resource.expire(key, seconds);
+        } catch (JedisException e) {
+            log.error("redis execution error! {}", e);
+            jedisPool.returnBrokenResource(resource);
+        } finally {
+            jedisPool.returnBrokenResource(resource);
+        }
+        return result;
+    }
 }
