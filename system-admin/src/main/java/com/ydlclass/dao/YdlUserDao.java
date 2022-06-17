@@ -28,7 +28,7 @@ public interface YdlUserDao {
      * @param pageable         分页对象
      * @return 对象列表
      */
-    List<YdlUser> queryAllByLimit(YdlUser ydlUser, @Param("pageable") Pageable pageable);
+    List<YdlUser> queryAllByLimit(@Param("ydlUser") YdlUser ydlUser, @Param("pageable") Pageable pageable);
 
     /**
      * 统计总行数

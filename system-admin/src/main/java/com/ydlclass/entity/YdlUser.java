@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2022-05-30 00:12:56
  */
-public class YdlUser implements Serializable {
+public class YdlUser extends YdlBaseEntity implements Serializable {
     private static final long serialVersionUID = -76386390318440490L;
     /**
      * 用户ID
