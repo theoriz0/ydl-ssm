@@ -45,7 +45,7 @@
       <el-container>
         <el-header>
 <!--        <el-header v-html="'<button onclick=\'alert(1)\'>我是攻击者的按钮</button>'">-->
-          昵称
+          昵称: {{ $store.state.user.nickname}}
           <el-button @click="doLogout" primary>Logout</el-button>
         </el-header>
         <!--进行路由跳转-->
